@@ -29,4 +29,38 @@ module.exports = {
     // 3.3 Definiendo el host
     host: "0.0.0.0"
   },
+  //Configuracion de los loaders
+  module: {
+    rules: [
+      //Reglas para archivos JS
+      { 
+        //Expresion regular para identificar archivos
+        test: /\.js$/,
+        //Excluir archivos de la carpeta node_modules
+        exclude: /node_modules/,
+        //Usar el loader de babel
+        use: [ 
+          {
+            loader: "babel-loader",
+            //Opciones de configuracion de babel
+            options: {
+              presets: [
+                [
+                  "@babel/preset-env",
+                  //Opciones de configuracion de preset-env
+                  {
+                    "modules": false,
+                    "useBuiltIns": "usage",
+                    //Corejs para usar polyfills
+                    "targets": '> 0.25%, not dead',
+                    "corejs": 3
+                  }
+                ],
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
 }

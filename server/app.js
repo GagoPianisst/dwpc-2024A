@@ -13,7 +13,44 @@ import logger from 'morgan';
 import indexRouter from './routes/index';
 import usersRouter from './routes/users';
 
-var app = express();
+// Importando las dependencias de webpack
+import webpack from 'webpack';
+import WebpackDevMiddleware from 'webpack-dev-middleware';
+import WebpackHotMiddleware from 'webpack-hot-middleware';
+// Importando la cofiguracion de webpack
+import webpackConfig from '../webpack.config';
+
+var app = express();  
+
+// Obteniendo el modo de ejecucion de la app
+const nodeEviroment = process.env.NODE_ENV || 'developement';
+
+//Configurando el entorno de desarrollo
+if(nodeEviroment === 'developement'){
+  console.log ("🛠️ Ejecutando en modo de desarrollo");
+  // Agregando el modo de configuracion a la ejecucion
+  webpackConfig.mode = 'developement';
+  // Estableciendo el valor del puerto del servidor de desarrollo.
+  webpackConfig.devServer.port = process.env.PORT || 8080;
+  // Configurando el HMR (Hot Module Replacement)
+  webpackConfig.entry = [
+    'webpack-hot-middleware/client?reload=true&timeout=1000',
+    webpackConfig.entry
+  ];
+
+  // Agregar el plugin a la configuracion de desarrollo de webpack
+  webpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
+  // Generando el empaquetado (bundle) de webpack
+  const bundle = webpack(webpackConfig);
+  // Agregando el middleware de webpack
+  app.use(WebpackDevMiddleware(bundle, {
+    publicPath: webpackConfig.output.publicPath
+  }));
+  // Agregando el middleware HMR
+  app.use(WebpackHotMiddleware(bundle));
+}else {
+  console.log("🚀 Ejecutando en modo produccion");
+}
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

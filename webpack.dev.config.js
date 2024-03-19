@@ -1,5 +1,7 @@
 // Importing Extract Plugin
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+// Importando Eslint plugin para webpack
+const EslintPlugin = require("eslint-webpack-plugin");
 
 // Notas importanes
 // El archivo de configuración debe usar ES5
@@ -82,6 +84,8 @@ module.exports = {
         new MiniCssExtractPlugin({
           // Nombre del archivo de salida
           filename: "styles/app.css"
-        })
+        }),
+        // Instanciar el plugin eslint
+        new EslintPlugin()
       ]
 }

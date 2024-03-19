@@ -13,7 +13,7 @@ let show = (msg = "No message given") => {
 function resolveAfter2Seconds() {
     return new Promise(resolve => {
         setTimeout(() => {
-            resovle('resolved');
+            resolve('resolved');
         }, 2000)
     });
 }
@@ -27,3 +27,4 @@ async function asyncCall() {
 
 //Llamar a la funcion asincrona
 asyncCall();
+show();

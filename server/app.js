@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // Preambulo
 // Ayuda a manejar errores http
 import createError from 'http-errors';
@@ -29,7 +30,7 @@ const nodeEnvironment = process.env.NODE_ENV || 'development';
 
 // Configurando el entorno de desarrollo
 if (nodeEnvironment === 'development') {
-  // console.log('🛠️ Ejecutando en modo de desarrollo');
+  console.log('🛠️ Ejecutando en modo de desarrollo');
   // Agregando el modo de configuracion a la ejecucion
   webpackConfig.mode = 'development';
   // Estableciendo el valor del puerto del servidor de desarrollo.
@@ -53,7 +54,7 @@ if (nodeEnvironment === 'development') {
   // Agregando el middleware HMR
   app.use(WebpackHotMiddleware(bundle));
 } else {
-  // console.log('🚀 Ejecutando en modo produccion');
+  console.log('🚀 Ejecutando en modo produccion');
 }
 
 // view engine setup
